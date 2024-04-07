@@ -3,7 +3,9 @@ const app = express();
 const port = 3500;
 const mongoose = require("mongoose")
 const funcionarioRoutes = require("./routes/routes");
+const cors = require('cors');
 
+app.use(cors()); // Use o middleware cors
 app.use("/api", funcionarioRoutes);
 app.use(express.json());
 
