@@ -18,8 +18,10 @@ mongoose
             // Iniciar o servidor apenas após a verificação
             app.listen(port, () => {
                 console.log(`Rodando na porta ${port}`);
+                
             });
     })
     .catch(err => {
         console.error('Erro ao conectar ao banco de dados:', err);
     });
+    

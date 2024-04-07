@@ -99,4 +99,15 @@ router.delete("/index/:index", async (req, res) => {
     }
 });
 
+router.delete("/:id", async (req, res) => {
+    try {
+        const funcionario = await Funcionario.findByIdAndDelete(req.params.id);
+        if (!funcionario) {
+            return res.status(404).json({ msg: "Funcionário não encontrado" });
+        }
+        res.status(200).json({ msg: "Funcionário deletado com sucesso" });
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+});
 module.exports = router;
