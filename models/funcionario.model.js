@@ -11,14 +11,14 @@ const funcionarioSchema = new mongoose.Schema({
     salario: { type: Number, required: true },
     comissionado: { type: Boolean, default: false },
     tipoContrato: { type: String, enum: ['CLT', 'PJ', 'ESTAGIO'], required: true },
+    numeroFilhos: { type: Number, default: 0 },
     salarioFamilia: { type: Boolean, default: false },
-    numeroQuotas: { type: Number, default: 0 },
     valeTransporte: { type: Boolean, default: false },
     contribuicaoSindical: { type: Boolean, default: false },
     jornadaTrabalho: { type: String, enum: ['TEMPO_INTEGRAL', 'MEIO_PERIODO'], required: true },
     insalubridade: { type: String, enum: ['MINIMO', 'MEDIO', 'MAXIMO'], required: true },
     adicionalPericulosidade: { type: Boolean, default: false },
-    auxilioCreche: { type: Boolean, default: false }
+    auxilioCreche: { type: Boolean, default: false },
 });
 
 const Funcionario = mongoose.model('Funcionario', funcionarioSchema);
