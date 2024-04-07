@@ -2,6 +2,22 @@ const express = require("express");
 const router = express.Router();
 const Funcionario = require("../models/funcionario.model.js");
 
+// Endpoint para verificar se há mais ou menos de 30 mulheres no banco
+
+router.get("/verificarMulheres", async (req, res) => {
+    try {
+        const countMulheres = await Funcionario.countDocuments({ sexo: 'F' });
+
+        if (countMulheres > 30) {
+            res.status(200).json({ message: 'Há mais de 30 mulheres no banco.' });
+        } else {
+            res.status(200).json({ message: 'Há menos de 30 mulheres no banco.' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao verificar a quantidade de mulheres no banco.' });
+    }
+});
+
 // Endpoint para criar um novo funcionário
 router.post("/", async (req, res) => {
     try {

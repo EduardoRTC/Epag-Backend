@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 
 const funcionarioSchema = new mongoose.Schema({
+    ativo : { type: Boolean, required: true, deafult: true},
     nome: { type: String, required: true },
     sexo: { type: String, enum: ['M', 'F'], required: true },
+    nasc: {type: String, required: true},
     salarioMaternidade: { type: Boolean, default: false },
     cpf: { type: String, required: true },
     cargo: { type: String, required: true },

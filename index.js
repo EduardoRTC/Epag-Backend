@@ -1,22 +1,21 @@
 const express = require("express");
 const app = express();
-const port = 3000;
-const mongoose = require("mongoose");
+const port = 3500;
+const mongoose = require("mongoose")
+const funcionarioRoutes = require("./routes/routes");
 
-// Importando rotas de funcionário
-const funcionarioRoutes = require("./routes/funcionarioRoutes");
-
+app.use("/api", funcionarioRoutes);
 app.use(express.json());
-
-// Middleware para rota de funcionário
-app.use("/api/funcionario", funcionarioRoutes);
 
 mongoose
     .connect("mongodb+srv://admin:testedb123@backenddb.nbarlhu.mongodb.net/api?retryWrites=true&w=majority&appName=BackendDB")
-    .then(() => {
+    .then(async () => {
         console.log("Connected!");
-        app.listen(port, () => {
-            console.log(`Example app listening on port ${port}`);
-        });
+            // Iniciar o servidor apenas após a verificação
+            app.listen(port, () => {
+                console.log(`Rodando na porta ${port}`);
+            });
     })
-    .catch(() => console.log("failed to connect!"));
+    .catch(err => {
+        console.error('Erro ao conectar ao banco de dados:', err);
+    });
