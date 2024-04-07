@@ -38,10 +38,10 @@ router.get("/", async (req, res) => {
     }
 });
 
-// Endpoint para buscar um funcionário por ID
-router.get("/:id", async (req, res) => {
+// Endpoint para buscar um funcionário por index
+router.get("/index/:index", async (req, res) => {
     try {
-        const funcionario = await Funcionario.findById(req.params.id);
+        const funcionario = await Funcionario.findOne({ index: req.params.index });
         if (!funcionario) {
             return res.status(404).json({ msg: "Funcionário não encontrado" });
         }
@@ -51,10 +51,10 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// Endpoint para atualizar um funcionário por ID
-router.put("/:id", async (req, res) => {
+// Endpoint para atualizar um funcionário por index
+router.put("/index/:index", async (req, res) => {
     try {
-        const funcionario = await Funcionario.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const funcionario = await Funcionario.findOneAndUpdate({ index: req.params.index }, req.body, { new: true });
         if (!funcionario) {
             return res.status(404).json({ msg: "Funcionário não encontrado" });
         }
@@ -64,10 +64,32 @@ router.put("/:id", async (req, res) => {
     }
 });
 
-// Endpoint para deletar um funcionário por ID
-router.delete("/:id", async (req, res) => {
+// Endpoint para alterar o status de um funcionário por index
+router.put("/status/:index", async (req, res) => {
+    const { index } = req.params;
+    const novoStatus = req.query.novoStatus;
+
     try {
-        const funcionario = await Funcionario.findByIdAndDelete(req.params.id);
+        const funcionario = await Funcionario.findOne({ index });
+        if (!funcionario) {
+            return res.status(404).json({ msg: "Funcionário não encontrado" });
+        }
+
+        // Alterar o status do funcionário
+        funcionario.ativo = novoStatus;
+        await funcionario.save();
+
+        res.status(200).json({ msg: "Status do funcionário atualizado com sucesso" });
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+});
+
+
+// Endpoint para deletar um funcionário por index
+router.delete("/index/:index", async (req, res) => {
+    try {
+        const funcionario = await Funcionario.findOneAndDelete({ index: req.params.index });
         if (!funcionario) {
             return res.status(404).json({ msg: "Funcionário não encontrado" });
         }
