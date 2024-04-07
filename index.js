@@ -5,9 +5,11 @@ const mongoose = require("mongoose")
 const funcionarioRoutes = require("./routes/routes");
 const cors = require('cors');
 
+
+app.use(express.json());
 app.use(cors()); // Use o middleware cors
 app.use("/api", funcionarioRoutes);
-app.use(express.json());
+
 
 mongoose
     .connect("mongodb+srv://admin:testedb123@backenddb.nbarlhu.mongodb.net/api?retryWrites=true&w=majority&appName=BackendDB")
